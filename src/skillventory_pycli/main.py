@@ -1,7 +1,8 @@
 import cyclopts
-from pydantic import AnyUrl
-import pydantic_settings
 import httpx
+import pydantic_settings
+from pydantic import AnyUrl
+from rich import console
 
 
 class Settings(pydantic_settings.BaseSettings):
@@ -22,10 +23,11 @@ def get_skill(*, url: AnyUrl = settings.skillventory_url, name: str) -> None:
         url: URL of the skillventory API
         name: Name of the skill to retrieve
     """
-    response = httpx.get(f"{url}v1/skills/name/{name}")
-    response.raise_for_status()
-    skill = response.json()
-    print(f"Skill: {skill["skill_name"]}\nLevel of confidence: {skill["level_of_confidence"]}")
+    with console.status("Retriving data...", spinner="bouncingBar"):
+        response = httpx.get(f"{url}v1/skills/name/{name}")
+        response.raise_for_status()
+        skill = response.json()
+        console.print(f"Skill: {skill["skill_name"]}\nLevel of confidence: {skill["level_of_confidence"]}")
 
 
 def cli():
