@@ -1,0 +1,90 @@
+[project]
+name = "skillventory-pycli"
+version = "0.1.0"
+description = "CLI tool to interact with a skillventory API"
+authors = [
+    { name = "Ulises Alexander AM", email = "30351520+UlisesAlexanderAM@users.noreply.github.com" }
+]
+licence = "MIT"
+dependencies = [
+    "cyclopts>=2.6.1",
+    "pydantic>=2.7.1",
+    "pydantic-config>=0.3.0",
+    "httpx>=0.27.0",
+]
+readme = "README.md"
+requires-python = ">= 3.12"
+
+[project.scripts]
+"skillventory-pycli" = "skillventory_pycli.main:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "ruff>=0.4.2",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/skillventory_pycli"]
+
+[tool.ruff]
+preview = true
+
+[tool.ruff.lint]
+select = [
+       #Default rules
+       "E4", "E7", "E9", # pycodestyle errors
+       "F", # pyflakes
+       #Non-default rules
+       "C90", # mccabe (too complex)
+       "N", # pep8-naming
+       "UP", # pyupgrade
+       "S", # flake8-bandit
+       "B", # flake8-bugbear
+       "A", # flake8-builtins
+       "C4", # flake8-comprehensions
+       "EM", # flake8-errmsg
+       "ICN", # flake8-import-conventions
+       "PT", # flake8-pytest-style
+       "RET", # flake8-return
+       "SIM", # flake8-simplify
+       "TID", # flake8-tidy-imports
+       "PL", # pylint
+       "RUF" # ruff-specific-rules
+       ]
+ignore = []
+# Preview rules
+extend-select = [
+              "PLC0415", # import-outside-top-level
+              "PLC1901", # compare-to-empty-string
+              "PLC2401", # non-ascii-name
+              "PLC2403", # non-ascii-import-name
+              "PLE0704", # misplaced-bare-raise
+              "PLE1132", # repeated-keyword-argument
+              "PLR0202", # no-classmethod-decorator
+              "PLR0203", # no-staticmethod-decorator
+              "PLR0904", # too-many-public-methods
+              "PLR0916", # too-many-boolean-expressions
+              "PLR0917", # too-many-positional
+              "PLR1704", # redefined-argument-from-local
+              "PLR1733", # unnecessary-dict-index-lookup
+              "PLR1736", # unnecessary-list-index-lookup
+              "PLR6201", # literal-membership
+              "PLW1501", # bad-open-mode
+              "PLW1514", # unspecified-encoding
+              "PLW3201", # bad-dunder-method-name
+              "FURB", # refurb
+              "RUF017", # quadratic-list-summation
+              "RUF018", # assignment-in-assert
+              "RUF019", # unnecessary-key-check
+              ]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
